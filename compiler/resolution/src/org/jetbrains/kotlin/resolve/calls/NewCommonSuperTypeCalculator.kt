@@ -101,6 +101,20 @@ object NewCommonSuperTypeCalculator {
         return if (actuallyNotNull) commonSuperType else null
     }
 
+    private fun TypeSystemCommonSuperTypesContext.uniteTypeParametersFlexibilityForSameTypes(types: List<SimpleTypeMarker>) {
+        val sameTypesSetModuloFlexibility = setOf<List<SimpleTypeMarker>>()
+
+        types.forEach {
+            for (i in 0 until it.argumentsCount()) {
+
+            }
+        }
+    }
+
+    private fun isDifferentFlexibilityInDepth() {
+
+    }
+
     // Makes representative sample, i.e. (A, B, A) -> (A, B)
     private fun TypeSystemCommonSuperTypesContext.uniquify(
         types: List<SimpleTypeMarker>,
