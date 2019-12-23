@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.psi.KtCallableReferenceExpression
 import org.jetbrains.kotlin.psi.KtExpression
 import org.jetbrains.kotlin.psi.KtPsiUtil
+import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCallWithAssert
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
 import org.jetbrains.kotlin.resolve.inline.InlineUtil
@@ -65,7 +66,8 @@ class PsiInlineCodegen(
             return
         }
         try {
-            performInline(resolvedCall?.typeArguments?.keys?.toList(), callDefault, callDefault, codegen.typeSystem)
+            val usedAsExpression = state.bindingContext[BindingContext.USED_AS_EXPRESSION, resolvedCall?.call?.callElement] ?: false
+            performInline(resolvedCall?.typeArguments?.keys?.toList(), callDefault, callDefault, codegen.typeSystem, usedAsExpression)
         } finally {
             state.globalInlineContext.exitFromInliningOf(resolvedCall)
         }
