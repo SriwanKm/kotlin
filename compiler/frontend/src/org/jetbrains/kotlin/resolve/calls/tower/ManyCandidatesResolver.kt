@@ -94,8 +94,8 @@ abstract class ManyCandidatesResolver<D : CallableDescriptor>(
             )
         }
 
-        errorCallsInfo.mapTo(allCandidates) { ResolutionResultCallInfo(it.callResolutionResult, it.result) }
-
+        val results = allCandidates.map { it.resolutionResult }
+        errorCallsInfo.filter { it.callResolutionResult !in results }.mapTo(allCandidates) { ResolutionResultCallInfo(it.callResolutionResult, it.result) }
         return allCandidates
     }
 
